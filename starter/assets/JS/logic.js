@@ -1,8 +1,8 @@
-// import { questions } from "./questions.js";
+document.addEventListener("DOMContentLoaded", function () {
 
 const time = document.getElementById("time");
 
-const startScreen = document.getElementById("startScreen");
+const startScreen = document.getElementById("start-screen");
 const startButton = document.getElementById("start");
 
 const questionsContainer = document.getElementById("questions");
@@ -53,10 +53,10 @@ function startQuiz() {
     updateTimerDisplay();
     
     timerInterval = setInterval(function() {
-        timeRemaining--;
+        timeLeft--;
         updateTimerDisplay();
 
-        if (timeRemaining <= 0) {
+        if (timeLeft <= 0) {
             endQuiz();
             
          }
@@ -89,7 +89,7 @@ function loadQuestion() {
 }
 
 function handleChoice(choice) {
-    const currentQuestion = questions[currentQuestionIndex];
+    const currentQuestion = randomQuestions[currentQuestionIndex];
     if (choice === currentQuestion.answer) {
         score += 1
         showFeedback("correct");
@@ -98,7 +98,7 @@ function handleChoice(choice) {
         showFeedback("incorrect");
     }
     
-    feedbackContainer.classList.remove("hide");
+    feedback.classList.remove("hide");
 
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
@@ -111,14 +111,14 @@ function handleChoice(choice) {
 function endQuiz() {
     clearInterval(timerInterval);
     questionsContainer.classList.add("hide");
-    endScreen.classList.remove("hide");
+    end-screen.classList.remove("hide");
     finalScore.textContent = score;
 }
 
 document.getElementById("start").addEventListener("click", startQuiz);
 
 document.getElementById("submit").addEventListener("click", function() {
-    const initials = initialsInput.value.trim();
+    const initialsInput = initials.value.trim();
     if (initials === "") {
         alert("Please enter your initials");
         return;
@@ -131,9 +131,9 @@ const userScore = {
     score: score
 };
 
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-highScores.push(userScore);
-localStorage.setItem("highScores", JSON.stringify(highScores));
+// const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+// highScores.push(userScore);
+// localStorage.setItem("highScores", JSON.stringify(highScores));
 
-window.location.href = "highscores.html";
-
+// window.location.href = "highscores.html";
+})

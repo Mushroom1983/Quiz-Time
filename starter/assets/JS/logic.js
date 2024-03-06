@@ -88,3 +88,52 @@ function loadQuestion() {
     });
 }
 
+function handleChoice(choice) {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (choice === currentQuestion.answer) {
+        score += 1
+        showFeedback("correct");
+    } else {
+        timeLeft -= 10;
+        showFeedback("incorrect");
+    }
+    
+    feedbackContainer.classList.remove("hide");
+
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    } else {
+        endQuiz();
+    }
+}
+
+function endQuiz() {
+    clearInterval(timerInterval);
+    questionsContainer.classList.add("hide");
+    endScreen.classList.remove("hide");
+    finalScore.textContent = score;
+}
+
+document.getElementById("start").addEventListener("click", startQuiz);
+
+document.getElementById("submit").addEventListener("click", function() {
+    const initials = initialsInput.value.trim();
+    if (initials === "") {
+        alert("Please enter your initials");
+        return;
+    }
+    
+})
+
+const userScore = {
+    initials: initials,
+    score: score
+};
+
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+highScores.push(userScore);
+localStorage.setItem("highScores", JSON.stringify(highScores));
+
+window.location.href = "highscores.html";
+

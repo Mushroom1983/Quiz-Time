@@ -69,5 +69,22 @@ function startQuiz() {
 
 }
 
-function loadQuestion() {}
+function loadQuestion() {
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const choicesContainer = document.getElementById("choices");
+
+    document.getElementById("question-title").textContent = currentQuestion.title;
+
+    choicesContainer.innerHTML = "";
+
+    currentQuestion.choices.forEach(function(choice) {
+        const button = document.createElement("button");
+        button.textContent = choice;
+        button.addEventListener("click", function() {
+            handleChoice(choice);
+        });
+        choicesContainer.appendChild(button);
+    });
+}
 
